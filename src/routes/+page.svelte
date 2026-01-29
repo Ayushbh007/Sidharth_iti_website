@@ -1,8 +1,9 @@
 <script>
-  import { Navbar } from '$lib/index';
+  import { Navbar, HeroSection } from '$lib/index';
 </script>
 
 <Navbar />
+<HeroSection />
 
 <div class="bg-red-500 text-white p-6 text-xl">Tailwind works in SvelteKit ✅</div>
 <h1>Welcome to your library project</h1>
