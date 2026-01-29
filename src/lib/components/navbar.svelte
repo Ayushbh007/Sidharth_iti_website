@@ -32,10 +32,10 @@
         <!-- First 3 Menu Items -->
         {#each menus.slice(0, 3) as menu (menu.title)}
           <div
-             class="relative hidden sm:block flex-shrink-0"
-  on:mouseenter={() => (openMenu = menu.title)}
-  role="navigation"
-  aria-label="Main navigation"
+            class="relative hidden sm:block flex-shrink-0"
+            on:mouseenter={() => (openMenu = menu.title)}
+            role="navigation"
+            aria-label="Main navigation"
           >
             <button
               class="flex items-center gap-0.5 md:gap-1 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
@@ -59,11 +59,11 @@
             {#if openMenu === menu.title}
               <div
                 id="menu-{menu.title}"
-    class="absolute left-0 mt-2 w-40 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl overflow-hidden z-10"
-    role="menu"
-    aria-labelledby="menu-button-{menu.title}"
-    tabindex="-1"
-    on:mouseleave={() => (openMenu = null)}
+                class="absolute left-0 mt-2 w-40 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl overflow-hidden z-10"
+                role="menu"
+                aria-labelledby="menu-button-{menu.title}"
+                tabindex="-1"
+                on:mouseleave={() => (openMenu = null)}
               >
                 {#each menu.items as item (item)}
                   <a
@@ -83,9 +83,9 @@
         <!-- More Dropdown -->
         <div
           class="relative flex-shrink-0"
-  role="button"
-  tabindex="0"
-  on:mouseenter={() => (openMenu = 'more')}
+          role="button"
+          tabindex="0"
+          on:mouseenter={() => (openMenu = 'more')}
         >
           <button
             class="flex items-center gap-0.5 md:gap-1 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"

@@ -1,16 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  export let images: string[] = [
-    '/images/slide_2.jpg',
-    '/images/slide_3.jpg',
-  ];
+  export let images: string[] = ['/images/slide_2.jpg', '/images/slide_3.jpg'];
 
   export let announcements: string[] = [
     'Admissions Open for 2026',
     'Industry-Aligned Training Programs',
     'Placement Assistance Available',
-    'Trusted by 5,000+ Students'
+    'Trusted by 5,000+ Students',
   ];
 
   let currentIndex = 0;
@@ -102,7 +99,9 @@
 <!-- CONTINUOUS ANNOUNCEMENT BAR -->
 <section class="w-full overflow-hidden bg-gray-900">
   <div class="relative flex h-12 items-center">
-    <div class="marquee flex min-w-full shrink-0 items-center gap-12 px-6 text-sm font-medium text-gray-100">
+    <div
+      class="marquee flex min-w-full shrink-0 items-center gap-12 px-6 text-sm font-medium text-gray-100"
+    >
       {#each announcements as item}
         <span>{item}</span>
       {/each}
