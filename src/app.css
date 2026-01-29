@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: project-level overrides */
+:root {
+  --bg: #ffffff;
+  --fg: #0f172a;
+}
