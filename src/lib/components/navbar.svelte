@@ -1,14 +1,90 @@
 <script lang="ts">
   let mobileOpen = false;
   let openMenu: string | null = null;
+  let openMoreMenu = false;
+  let moreMenuTimeout: ReturnType<typeof setTimeout>;
 
   const menus = [
-    { title: 'Products', items: ['Product A', 'Product B', 'Product C'] },
-    { title: 'Solutions', items: ['For Teams', 'For Enterprises', 'For Startups'] },
-    { title: 'Company', items: ['About Us', 'Careers', 'Contact'] },
-    { title: 'For Hotels', items: ['Hotel CRM', 'Booking Engine', 'Analytics'] },
-    { title: 'Pricing', items: ['Plans', 'Compare', 'Custom'] },
-    { title: 'Watch Demo', items: ['Live Demo', 'Recorded Demo'] },
+    { title: 'Home', items: [] },
+    {
+      title: 'About Us',
+      items: [
+        'About Institute',
+        'Introduction of the Institute',
+        'Director Message',
+        'Administrative Staff',
+        'Infrastructure, Building and Workshop',
+        'Trade Specific Infrastructure',
+        'Court Cases and Status',
+        'Electric Power Supply',
+        'Fund Status',
+        'ISO Certificates',
+        'Other Certifications',
+      ],
+    },
+    {
+      title: 'Faculty',
+      items: ['Faculty (Technical Staff)', 'Attendance of Instructors'],
+    },
+    {
+      title: 'Admission',
+      items: [
+        'Schemes Running',
+        'Rating of Institute by QCI',
+        'Trade',
+        'Admission Criteria',
+        'Admission Format',
+        'Information Brochure',
+        'Rules & Regulations',
+      ],
+    },
+    {
+      title: 'Students Corner',
+      items: [
+        'Online Practice Test CBT Exam',
+        'Records of Trainees',
+        'Attendance of Trainees',
+        'Progress Report',
+        'Overall Results',
+        'Details of Certificates Issued to Trainees',
+        'Industry Institute Linkages',
+        'Right to Information',
+        'Achievements by Trainees',
+        'Program Semester (1st, 2nd, 3rd & 4th)',
+      ],
+    },
+    {
+      title: 'Facilities',
+      items: [
+        'Placements',
+        'Library',
+        'Computer Lab',
+        'Sports / Recreation',
+        'Extra Curricular Activities',
+      ],
+    },
+    {
+      title: 'Other Information',
+      items: [
+        'Visitors List',
+        'Details of Inspection',
+        'State Directorate',
+        'DGET & State Government Orders',
+        'Feedback & Suggestions',
+        'Grievance Redressal Mechanism',
+        'Certificate Verification',
+      ],
+    },
+    { title: 'Online Registration', items: [] },
+    {
+      title: 'Useful Links',
+      items: [
+        'NCVT – Management Information System',
+        'Directorate of Employment & Training',
+      ],
+    },
+    { title: 'Login', items: ['Admin Login', 'Mail'] },
+    { title: 'Photos', items: [] },
   ];
 
   function toggleMenu(title: string) {
@@ -27,55 +103,61 @@
         <img src="/logos/logo.png" alt="Engine Logo" class="h-12 md:h-14 lg:h-16 xl:h-20 w-auto" />
       </div>
 
-      <!-- Center: Desktop Menu (first 3 items, rest in More) -->
-      <div class="flex items-center gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-1 justify-center min-w-0">
-        <!-- First 3 Menu Items -->
+      <!-- Center: Desktop Menu -->
+      <div class="flex items-center gap-1 md:gap-1.5 lg:gap-2 xl:gap-3 flex-1 justify-center min-w-0">
+        <!-- Show: Home, About Us, Faculty on all sizes -->
         {#each menus.slice(0, 3) as menu (menu.title)}
-          <div
-            class="relative hidden sm:block flex-shrink-0"
-            on:mouseenter={() => (openMenu = menu.title)}
-            role="navigation"
-            aria-label="Main navigation"
-          >
-            <button
-              class="flex items-center gap-0.5 md:gap-1 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
-              aria-expanded={openMenu === menu.title}
-              aria-controls="menu-{menu.title}"
-            >
-              {menu.title}
-              <svg
-                class="w-3 h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 flex-shrink-0"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-
-            {#if openMenu === menu.title}
-              <div
-                id="menu-{menu.title}"
-                class="absolute left-0 mt-2 w-40 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl overflow-hidden z-10"
-                role="menu"
-                aria-labelledby="menu-button-{menu.title}"
-                tabindex="-1"
-                on:mouseleave={() => (openMenu = null)}
-              >
-                {#each menu.items as item (item)}
-                  <a
-                    href="#{item.toLowerCase().replace(/\s+/g, '-')}"
-                    class="block px-3 md:px-4 py-2 text-xs md:text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 transition"
-                    role="menuitem"
-                    tabindex="0"
+          <div class="relative hidden sm:block flex-shrink-0" role="navigation" aria-label="Main navigation">
+            {#if menu.items.length > 0}
+              <div on:mouseenter={() => (openMenu = menu.title)} on:mouseleave={() => (openMenu = null)}>
+                <button
+                  class="flex items-center gap-0.5 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
+                  aria-expanded={openMenu === menu.title}
+                  aria-controls="menu-{menu.title}"
+                >
+                  {menu.title}
+                  <svg
+                    class="w-3 h-3 flex-shrink-0"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
-                    {item}
-                  </a>
-                {/each}
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                {#if openMenu === menu.title}
+                  <div
+                    id="menu-{menu.title}"
+                    class="absolute left-0 mt-2 w-44 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl overflow-hidden z-10"
+                    role="menu"
+                    aria-labelledby="menu-button-{menu.title}"
+                    tabindex="-1"
+                    on:mouseleave={() => (openMenu = null)}
+                  >
+                    {#each menu.items as item (item)}
+                      <a
+                        href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                        class="block px-3 md:px-4 py-2 text-xs md:text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 transition"
+                        role="menuitem"
+                        tabindex="0"
+                      >
+                        {item}
+                      </a>
+                    {/each}
+                  </div>
+                {/if}
               </div>
+            {:else}
+              <a
+                href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+                class="flex items-center gap-0.5 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
+              >
+                {menu.title}
+              </a>
             {/if}
           </div>
         {/each}
@@ -83,19 +165,26 @@
         <!-- More Dropdown -->
         <div
           class="relative flex-shrink-0"
-          role="button"
-          tabindex="0"
-          on:mouseenter={() => (openMenu = 'more')}
+          on:mouseenter={() => {
+            clearTimeout(moreMenuTimeout);
+            openMoreMenu = true;
+          }}
+          on:mouseleave={() => {
+            moreMenuTimeout = setTimeout(() => {
+              openMoreMenu = false;
+              openMenu = null;
+            }, 300);
+          }}
         >
           <button
-            class="flex items-center gap-0.5 md:gap-1 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
-            aria-expanded={openMenu === 'more'}
+            class="flex items-center gap-0.5 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
+            aria-expanded={openMoreMenu}
             aria-controls="menu-more"
-            on:click={() => (openMenu = openMenu === 'more' ? null : 'more')}
+            on:click={() => (openMoreMenu = !openMoreMenu)}
           >
             More
             <svg
-              class="w-3 h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 flex-shrink-0"
+              class="w-3 h-3 flex-shrink-0 transition transform {openMoreMenu ? 'rotate-180' : ''}"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -107,33 +196,64 @@
             </svg>
           </button>
 
-          {#if openMenu === 'more'}
+          {#if openMoreMenu}
             <div
               id="menu-more"
-              class="absolute left-0 mt-2 w-40 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl overflow-hidden z-10"
+              class="absolute left-0 mt-2 w-44 md:w-48 lg:w-56 rounded-xl bg-white border border-gray-100 shadow-xl z-10"
               role="menu"
               tabindex="0"
-              on:mouseleave={() => (openMenu = null)}
             >
               {#each menus.slice(3) as menu (menu.title)}
-                <div class="border-b border-gray-100 last:border-b-0">
-                  <button
-                    class="w-full text-left px-3 md:px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 transition text-xs md:text-sm"
-                    on:click={() => (openMenu = openMenu === menu.title ? null : menu.title)}
-                  >
-                    {menu.title}
-                  </button>
-                  {#if openMenu === menu.title}
-                    {#each menu.items as item (item)}
-                      <a
-                        href="#{item.toLowerCase().replace(/\s+/g, '-')}"
-                        class="block px-6 md:px-7 py-2 text-xs md:text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition"
-                        role="menuitem"
-                        tabindex="0"
+                <div 
+                  class="relative border-b border-gray-100 last:border-b-0"
+                >
+                  {#if menu.items.length > 0}
+                    <button
+                      class="w-full text-left px-3 md:px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 transition text-xs md:text-sm flex justify-between items-center"
+                      on:click={() => (openMenu = openMenu === menu.title ? null : menu.title)}
+                      on:mouseenter={() => {
+                        clearTimeout(moreMenuTimeout);
+                        openMenu = menu.title;
+                      }}
+                      on:mouseleave={() => {
+                        if (openMenu === menu.title) {
+                          moreMenuTimeout = setTimeout(() => {
+                            openMenu = null;
+                          }, 500);
+                        }
+                      }}
+                    >
+                      <span>{menu.title}</span>
+                      <svg class="w-3 h-3 flex-shrink-0 transition transform {openMenu === menu.title ? 'rotate-90' : ''}" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                    {#if openMenu === menu.title}
+                      <div 
+                        class="absolute left-full top-0 ml-2 w-44 md:w-48 rounded-lg bg-white border border-gray-100 shadow-xl overflow-y-auto max-h-96 z-20"
+                        on:mouseenter={() => {
+                          clearTimeout(moreMenuTimeout);
+                        }}
                       >
-                        {item}
-                      </a>
-                    {/each}
+                        {#each menu.items as item (item)}
+                          <a
+                            href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                            class="block px-3 md:px-4 py-2 text-xs md:text-sm text-gray-600 hover:bg-red-100 hover:text-red-600 transition"
+                            role="menuitem"
+                            tabindex="0"
+                          >
+                            {item}
+                          </a>
+                        {/each}
+                      </div>
+                    {/if}
+                  {:else}
+                    <a
+                      href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+                      class="block w-full text-left px-3 md:px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 transition text-xs md:text-sm"
+                    >
+                      {menu.title}
+                    </a>
                   {/if}
                 </div>
               {/each}
@@ -299,26 +419,36 @@
       <!-- Mobile Menu Items -->
       {#each menus as menu (menu.title)}
         <div>
-          <button
-            class="w-full flex justify-between items-center font-medium text-gray-800 py-2 hover:text-red-600 transition"
-            on:click={() => toggleMenu(menu.title)}
-          >
-            {menu.title}
-            <span class="text-lg">{openMenu === menu.title ? '−' : '+'}</span>
-          </button>
+          {#if menu.items.length > 0}
+            <button
+              class="w-full flex justify-between items-center font-medium text-gray-800 py-2 hover:text-red-600 transition"
+              on:click={() => toggleMenu(menu.title)}
+            >
+              {menu.title}
+              <span class="text-lg">{openMenu === menu.title ? '−' : '+'}</span>
+            </button>
 
-          {#if openMenu === menu.title}
-            <div class="mt-2 ml-4 space-y-2">
-              {#each menu.items as item (item)}
-                <a
-                  href="#{item.toLowerCase().replace(/\s+/g, '-')}"
-                  class="block text-sm text-gray-600 hover:text-red-600 py-1 transition"
-                  on:click={() => (mobileOpen = false)}
-                >
-                  {item}
-                </a>
-              {/each}
-            </div>
+            {#if openMenu === menu.title}
+              <div class="mt-2 ml-4 space-y-2">
+                {#each menu.items as item (item)}
+                  <a
+                    href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                    class="block text-sm text-gray-600 hover:text-red-600 py-1 transition"
+                    on:click={() => (mobileOpen = false)}
+                  >
+                    {item}
+                  </a>
+                {/each}
+              </div>
+            {/if}
+          {:else}
+            <a
+              href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+              class="block font-medium text-gray-800 py-2 hover:text-red-600 transition"
+              on:click={() => (mobileOpen = false)}
+            >
+              {menu.title}
+            </a>
           {/if}
         </div>
       {/each}
