@@ -78,10 +78,7 @@
     { title: 'Online Registration', items: [] },
     {
       title: 'Useful Links',
-      items: [
-        'NCVT – Management Information System',
-        'Directorate of Employment & Training',
-      ],
+      items: ['NCVT – Management Information System', 'Directorate of Employment & Training'],
     },
     { title: 'Login', items: ['Admin Login', 'Mail'] },
     { title: 'Photos', items: [] },
@@ -104,27 +101,34 @@
       </div>
 
       <!-- Center: Desktop Menu -->
-      <div class="flex items-center gap-1 md:gap-1.5 lg:gap-2 xl:gap-3 flex-1 justify-center min-w-0">
+      <div
+        class="flex items-center gap-1 md:gap-1.5 lg:gap-2 xl:gap-3 flex-1 justify-center min-w-0"
+      >
         <!-- Show: Home, About Us, Faculty on all sizes -->
         {#each menus.slice(0, 3) as menu (menu.title)}
-          <div class="relative hidden sm:block flex-shrink-0" role="navigation" aria-label="Main navigation">
+          <div
+            class="relative hidden sm:block flex-shrink-0"
+            role="navigation"
+            aria-label="Main navigation"
+          >
             {#if menu.items.length > 0}
-              <div on:mouseenter={() => (openMenu = menu.title)} on:mouseleave={() => (openMenu = null)}>
+              <div
+                role="none"
+                on:mouseenter={() => (openMenu = menu.title)}
+                on:mouseleave={() => (openMenu = null)}
+              >
                 <button
+                  id="menu-button-{menu.title}"
                   class="flex items-center gap-0.5 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
                   aria-expanded={openMenu === menu.title}
                   aria-controls="menu-{menu.title}"
                 >
                   {menu.title}
-                  <svg
-                    class="w-3 h-3 flex-shrink-0"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
+                  <svg class="w-3 h-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </button>
@@ -204,9 +208,7 @@
               tabindex="0"
             >
               {#each menus.slice(3) as menu (menu.title)}
-                <div 
-                  class="relative border-b border-gray-100 last:border-b-0"
-                >
+                <div class="relative border-b border-gray-100 last:border-b-0">
                   {#if menu.items.length > 0}
                     <button
                       class="w-full text-left px-3 md:px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 transition text-xs md:text-sm flex justify-between items-center"
@@ -224,12 +226,22 @@
                       }}
                     >
                       <span>{menu.title}</span>
-                      <svg class="w-3 h-3 flex-shrink-0 transition transform {openMenu === menu.title ? 'rotate-90' : ''}" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
+                      <svg
+                        class="w-3 h-3 flex-shrink-0 transition transform {openMenu === menu.title
+                          ? 'rotate-90'
+                          : ''}"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                          clip-rule="evenodd"
+                        />
                       </svg>
                     </button>
                     {#if openMenu === menu.title}
-                      <div 
+                      <div
                         class="absolute left-full top-0 ml-2 w-44 md:w-48 rounded-lg bg-white border border-gray-100 shadow-xl overflow-y-auto max-h-96 z-20"
                         on:mouseenter={() => {
                           clearTimeout(moreMenuTimeout);
