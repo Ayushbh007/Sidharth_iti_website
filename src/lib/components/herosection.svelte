@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
   import { onMount } from 'svelte';
 
   export let images: string[] = ['/images/slide_2.jpg', '/images/slide_3.jpg'];
@@ -34,9 +34,9 @@
     const diff = touchStartX - touchEndX;
     if (Math.abs(diff) > swipeThreshold) {
       if (diff > 0) {
-        changeSlide(1); // Swipe left, go to next
+        changeSlide(1);
       } else {
-        changeSlide(-1); // Swipe right, go to previous
+        changeSlide(-1);
       }
     }
   }
@@ -54,7 +54,6 @@
   });
 </script>
 
-<!-- HERO SLIDESHOW -->
 <section
   class="relative h-[80vh] w-full overflow-hidden cursor-grab active:cursor-grabbing"
   on:touchstart={handleTouchStart}
@@ -73,7 +72,6 @@
     <div class="absolute inset-0 bg-black/40"></div>
   </div>
 
-  <!-- Left Button -->
   <button
     on:click={() => changeSlide(-1)}
     class="absolute left-4 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white/20 p-3 text-white transition-all hover:bg-white/40 focus:outline-none"
@@ -84,7 +82,6 @@
     </svg>
   </button>
 
-  <!-- Right Button -->
   <button
     on:click={() => changeSlide(1)}
     class="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white/20 p-3 text-white transition-all hover:bg-white/40 focus:outline-none"
@@ -96,7 +93,6 @@
   </button>
 </section>
 
-<!-- CONTINUOUS ANNOUNCEMENT BAR -->
 <section class="w-full overflow-hidden bg-gray-900">
   <div class="relative flex h-12 items-center">
     <div

@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
   export interface Card {
     title: string;
     image: string;
@@ -31,7 +31,6 @@
   ];
 </script>
 
-<!-- MAIN PAGE CARDS -->
 <section class="bg-white py-16">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -39,7 +38,6 @@
         <article
           class="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:shadow-lg"
         >
-          <!-- Image -->
           <div class="aspect-[16/10] overflow-hidden bg-gray-100">
             <img
               src={card.image}
@@ -48,7 +46,6 @@
             />
           </div>
 
-          <!-- Content -->
           <div class="flex flex-1 flex-col p-6">
             <h3 class="mb-3 text-lg font-semibold text-gray-900">
               {card.title}
@@ -63,12 +60,11 @@
                 href={card.href}
                 class="inline-flex items-center text-sm font-medium text-red-600 hover:underline"
               >
-                Read More →
+                Read More â†’
               </a>
             </div>
           </div>
 
-          <!-- Accent line -->
           <div class="h-1 w-full bg-red-600"></div>
         </article>
       {/each}
