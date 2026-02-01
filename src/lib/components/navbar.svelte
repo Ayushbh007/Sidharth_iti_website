@@ -99,6 +99,27 @@
   function toggleMenu(title: string) {
     openMenu = openMenu === title ? null : title;
   }
+
+  // Helper function to convert menu item text to URL path
+  function toPath(text: string): string {
+    return text.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  // Map of menu items that have dedicated routes
+  const dedicatedRoutes: Record<string, string> = {
+    'home': '/',
+    'about institute': '/aboutinstitute',
+  };
+
+  // Get the URL for a menu item
+  function getMenuItemUrl(item: string): string {
+    const key = item.toLowerCase();
+    if (dedicatedRoutes[key]) {
+      return dedicatedRoutes[key];
+    }
+    // Return placeholder - individual pages will be created
+    return `/${toPath(item)}`;
+  }
 </script>
 
 <nav class="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
@@ -156,7 +177,7 @@
                   >
                     {#each menu.items as item (item)}
                       <a
-                        href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                        href="{getMenuItemUrl(item)}"
                         class="block px-3 md:px-4 py-2 text-xs md:text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 transition"
                         role="menuitem"
                         tabindex="0"
@@ -169,7 +190,7 @@
               </div>
             {:else}
               <a
-                href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+                href="{getMenuItemUrl(menu.title)}"
                 class="flex items-center gap-0.5 font-medium text-gray-700 hover:text-red-600 transition text-xs md:text-sm lg:text-base whitespace-nowrap"
               >
                 {menu.title}
@@ -261,7 +282,7 @@
                       >
                         {#each menu.items as item (item)}
                           <a
-                            href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                            href="{getMenuItemUrl(item)}"
                             class="block px-3 md:px-4 py-2 text-xs md:text-sm text-gray-600 hover:bg-red-100 hover:text-red-600 transition"
                             role="menuitem"
                             tabindex="0"
@@ -273,7 +294,7 @@
                     {/if}
                   {:else}
                     <a
-                      href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+                      href="{getMenuItemUrl(menu.title)}"
                       class="block w-full text-left px-3 md:px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 transition text-xs md:text-sm"
                     >
                       {menu.title}
@@ -342,7 +363,7 @@
           </a>
 
           <a
-            href="https://wa.me"
+            href="https://wa.me/918279632961"
             target="_blank"
             aria-label="WhatsApp"
             class="text-gray-500 hover:text-red-600 transition"
@@ -456,7 +477,7 @@
               <div class="mt-2 ml-4 space-y-2">
                 {#each menu.items as item (item)}
                   <a
-                    href="#{item.toLowerCase().replace(/\s+/g, '-')}"
+                    href="{getMenuItemUrl(item)}"
                     class="block text-sm text-gray-600 hover:text-red-600 py-1 transition"
                     on:click={() => (mobileOpen = false)}
                   >
@@ -467,7 +488,7 @@
             {/if}
           {:else}
             <a
-              href="#{menu.title.toLowerCase().replace(/\s+/g, '-')}"
+              href="{getMenuItemUrl(menu.title)}"
               class="block font-medium text-gray-800 py-2 hover:text-red-600 transition"
               on:click={() => (mobileOpen = false)}
             >
