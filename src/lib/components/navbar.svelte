@@ -3,6 +3,18 @@
   let openMenu: string | null = null;
   let openMoreMenu = false;
   let moreMenuTimeout: ReturnType<typeof setTimeout>;
+  let menuTimeout: ReturnType<typeof setTimeout>;
+
+  function openMenuWithDelay(title: string) {
+    clearTimeout(menuTimeout);
+    openMenu = title;
+  }
+
+  function closeMenuWithDelay() {
+    menuTimeout = setTimeout(() => {
+      openMenu = null;
+    }, 300);
+  }
 
   const menus = [
     { title: 'Home', items: [] },
@@ -114,8 +126,9 @@
             {#if menu.items.length > 0}
               <div
                 role="none"
-                on:mouseenter={() => (openMenu = menu.title)}
-                on:mouseleave={() => (openMenu = null)}
+                on:mouseenter={() => openMenuWithDelay(menu.title)}
+                on:mouseleave={() => closeMenuWithDelay()}
+                class="relative"
               >
                 <button
                   id="menu-button-{menu.title}"
@@ -140,7 +153,6 @@
                     role="menu"
                     aria-labelledby="menu-button-{menu.title}"
                     tabindex="-1"
-                    on:mouseleave={() => (openMenu = null)}
                   >
                     {#each menu.items as item (item)}
                       <a
