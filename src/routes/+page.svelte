@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { Navbar, HeroSection, Mainpagecards, Footer } from '$lib/index';
+  import Navbar from '$lib/components/Navbar.svelte';
+  import HeroSection from '$lib/components/HeroSection.svelte';
+  import Mainpagecards from '$lib/components/Mainpagecards.svelte';
+  import Footer from '$lib/components/Footer.svelte';
 </script>
 
 <Navbar />
