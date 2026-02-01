@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Navbar from '$lib/components/Navbar.svelte';
-  import HeroSection from '$lib/components/HeroSection.svelte';
-  import Mainpagecards from '$lib/components/Mainpagecards.svelte';
-  import Footer from '$lib/components/Footer.svelte';
+  import Navbar from '$lib/Components/Navbar.svelte';
+  import HeroSection from '$lib/Components/HeroSection.svelte';
+  import Mainpagecards from '$lib/Components/MainPageCards.svelte';
+  import Footer from '$lib/Components/Footer.svelte';
 </script>
 
 <Navbar />
